@@ -1,5 +1,5 @@
-import Navbar from './components/common/Navbar'
-
+import Navbar from './components/common/Navbar.jsx'
+import Hero from './components/landing/Hero.jsx'
 import './App.css'
 
 function App() {
@@ -11,6 +11,11 @@ function App() {
         onBackToHome={handleBackToHome}
         
       />
+      <main>
+        <section id="home">
+          <Hero />
+        </section>
+      </main>
     </div>
   )
 }
