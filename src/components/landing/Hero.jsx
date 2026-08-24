@@ -92,11 +92,6 @@ function Hero() {
           </div>
         </div>
       </div>
-
-      <div className="hero-scroll-indicator">
-        <span>Scroll to explore</span>
-        <span className="hero-scroll-arrow">↓</span>
-      </div>
     </div>
   )
 }
