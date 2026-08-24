@@ -2,14 +2,14 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import Navbar from './components/common/Navbar.jsx'
 import Hero from './components/landing/Hero.jsx'
-import Testimonials from './components/landing/Testimonials'
-import CareerSelection from './components/careers/CareerSelection'
+import Testimonials from './components/landing/Testimonials.jsx'
 import CareerSelection from './components/careers/CareerSelection.jsx'
+import SimulatorDashboard from './components/simulator/SimulatorDashboard.jsx'
+import AIMentor from './components/mentor/AIMentor.jsx'
 import ResumeAnalyzer from './components/resume/ResumeAnalyzer.jsx'
 import Footer from './components/common/Footer.jsx'
 import {careerData} from './data/careerData.js'
 import './App.css'
-import SimulatorDashboard from './components/simulator/SimulatorDashboard.jsx'
 
 
 function App() {
