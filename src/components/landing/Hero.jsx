@@ -92,6 +92,11 @@ function Hero() {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
+=======
+
+      
+>>>>>>> f00dafc (scroll to explore)
     </div>
   )
 }
