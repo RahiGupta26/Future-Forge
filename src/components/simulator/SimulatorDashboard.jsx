@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import SkillsRoadmap from './SkillsRoadmap'
-import SalaryGrowth from './SalaryGrowth'
-import TopCompanies from './TopCompanies'
-import DailyRoutine from './DailyRoutine'
-import RequiredProjects from './RequiredProjects'
-import CareerTimeline from './CareerTimeline'
-import InterviewPrep from './InterviewPrep'
+import SkillsRoadmap from './SkillsRoadmap.jsx'
+import SalaryGrowth from './SalaryGrowth.jsx'
+import TopCompanies from './TopCompanies.jsx'
+import DailyRoutine from './DailyRoutine.jsx'
+import RequiredProjects from './RequiredProjects.jsx'
+import CareerTimeline from './CareerTimeline.jsx'
+import InterviewPrep from './InterviewPrep.jsx'
 import '../../styles/SimulatorDashboard.css'
 
 function SimulatorDashboard({ career }) {
