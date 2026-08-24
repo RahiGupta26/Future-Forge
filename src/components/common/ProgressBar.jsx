@@ -29,4 +29,4 @@ function ProgressBar({ label, percentage, color }) {
   )
 }
 
-export default ProgressBar
+export default ProgressBar 
