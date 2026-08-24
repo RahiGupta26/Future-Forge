@@ -1,22 +1,72 @@
+import { useState } from 'react'
+import { useEffect } from 'react'
 import Navbar from './components/common/Navbar.jsx'
 import Hero from './components/landing/Hero.jsx'
+import Testimonials from './components/landing/Testimonials'
+import CareerSelection from './components/careers/CareerSelection'
+import CareerSelection from './components/careers/CareerSelection.jsx'
 import ResumeAnalyzer from './components/resume/ResumeAnalyzer.jsx'
+import Footer from './components/common/Footer.jsx'
+import {careerData} from './data/careerData.js'
 import './App.css'
 
 function App() {
+
+  const [selectedCareer, setSelectedCareer] = useState(null)
+  const [currentView, setCurrentView] = useState('home')
+
+
+
+
+
+
+
+
+
+  const handleCareerSelect = (careerId) => {
+    const career = careerData.find(c => c.id === careerId)
+    setSelectedCareer(career)
+  }
   
   return (
-    <div classnName="App">
+    <div className="App">
       <Navbar 
         onNavigate={setCurrentView}
         onBackToHome={handleBackToHome}
-        
+        showBack={selectedCareer !== null}
       />
-      <main>
-        <section id="home">
-          <Hero />
-        </section>
-      </main>
+      {!selectedCareer ? (
+        <main>
+          <section id="home">
+            <Hero />
+          </section>
+          <section id="features">
+            <Features />
+          </section>
+          <section id="careers">
+            <CareerSelection onSelect={handleCareerSelect} />
+          </section>
+          <section id="testimonials">
+            <Testimonials />
+          </section>
+          <section id="mentor">
+            <AIMentor career={null} />
+          </section>
+        </main>
+      ) : (
+        <main>
+          <section id="simulator">
+            <SimulatorDashboard career={selectedCareer} />
+          </section>
+          <section id="mentor">
+            <AIMentor career={selectedCareer} />
+          </section>
+          <section id="resume">
+            <ResumeAnalyzer career={selectedCareer} />
+          </section>
+        </main>
+      )}
+      <Footer/>
     </div>
   )
 }
