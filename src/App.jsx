@@ -17,21 +17,30 @@ function App() {
   const [selectedCareer, setSelectedCareer] = useState(null)
   const [currentView, setCurrentView] = useState('home')
 
-
-
-
-
-
-
+  useEffect(() => {
+    if (selectedCareer) {
+      setCurrentView('simulator')
+      const el = document.getElementById('simulator')
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }, [selectedCareer])
 
 
   const handleCareerSelect = (careerId) => {
     const career = careerData.find(c => c.id === careerId)
     setSelectedCareer(career)
   }
+
+  const handleBackToHome = () => {
+    setSelectedCareer(null)
+    setCurrentView('home')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
   
   return (
-    <div className="App">
+    <div className="app">
       <Navbar 
         onNavigate={setCurrentView}
         onBackToHome={handleBackToHome}
