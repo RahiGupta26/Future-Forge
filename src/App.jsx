@@ -9,6 +9,8 @@ import ResumeAnalyzer from './components/resume/ResumeAnalyzer.jsx'
 import Footer from './components/common/Footer.jsx'
 import {careerData} from './data/careerData.js'
 import './App.css'
+import SimulatorDashboard from './components/simulator/SimulatorDashboard.jsx'
+
 
 function App() {
 
