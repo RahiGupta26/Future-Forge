@@ -2,6 +2,8 @@ import Navbar from './components/common/Navbar.jsx'
 import Hero from './components/landing/Hero.jsx'
 import ResumeAnalyzer from './components/resume/ResumeAnalyzer.jsx'
 import './App.css'
+import SimulatorDashboard from './components/simulator/SimulatorDashboard.jsx'
+
 
 function App() {
   
