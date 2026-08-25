@@ -95,6 +95,45 @@
   color: white;
 }
 
+/* User Info */
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+}
+
+.navbar-user-avatar {
+  font-size: 1.1rem;
+}
+
+.navbar-user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navbar-logout-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 2px;
+  transition: transform var(--transition-fast);
+}
+
+.navbar-logout-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Hamburger Menu */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -125,6 +164,7 @@
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
+/* Mobile Menu */
 .mobile-menu {
   display: none;
   position: fixed;

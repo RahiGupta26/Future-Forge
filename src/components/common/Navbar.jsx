@@ -1,10 +1,8 @@
-import {useState} from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import ThemeToggle from './ThemeToggle'
 import '../../styles/Navbar.css'
 
-
-function Navbar({ onNavigate, onBackToHome, showBack }) {
+function Navbar({ onNavigate, onBackToHome, showBack, user, onLogout }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
 
@@ -58,6 +56,15 @@ function Navbar({ onNavigate, onBackToHome, showBack }) {
               </button>
             )}
             <ThemeToggle />
+            {user && (
+              <div className="navbar-user">
+                <span className="navbar-user-avatar">{user.avatar || '👤'}</span>
+                <span className="navbar-user-name">{user.name}</span>
+                <button className="navbar-logout-btn" onClick={onLogout} title="Log out">
+                  🚪
+                </button>
+              </div>
+            )}
             <button
               className={`hamburger ${isMobileOpen ? 'active' : ''}`}
               onClick={() => setIsMobileOpen(!isMobileOpen)}
