@@ -95,7 +95,6 @@
   color: white;
 }
 
-/* User Info */
 .navbar-user {
   display: flex;
   align-items: center;
@@ -133,7 +132,6 @@
   transform: scale(1.2);
 }
 
-/* Hamburger Menu */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -164,7 +162,6 @@
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* Mobile Menu */
 .mobile-menu {
   display: none;
   position: fixed;
