@@ -1,39 +1,32 @@
-import { useState} from 'react'
-import { useEffect } from 'react'
-import AnimatedCounter from '../common/AnimatedCounter.jsx'
-import '../../styles/Hero.css'
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import AnimatedCounter from '../common/AnimatedCounter';
+import '../../styles/Hero.css';
 
 function Hero() {
-  const [displayText, setDisplayText] = useState('')
-  const fullText = 'Forge Your Future'
-  const [isTypingDone, setIsTypingDone] = useState(false)
+  const [displayText, setDisplayText] = useState('');
+  const fullText = 'Forge Your Future';
+  const [isTypingDone, setIsTypingDone] = useState(false);
 
   useEffect(() => {
-    let index = 0
+    let index = 0;
     const typingInterval = setInterval(() => {
       if (index <= fullText.length) {
-        setDisplayText(fullText.slice(0, index))
-        index++
+        setDisplayText(fullText.slice(0, index));
+        index++;
       } else {
-        clearInterval(typingInterval)
-        setIsTypingDone(true)
+        clearInterval(typingInterval);
+        setIsTypingDone(true);
       }
-    }, 100)
+    }, 100);
 
-    return () => clearInterval(typingInterval)
-  }, [])
-
-  const scrollToCareers = () => {
-    const element = document.getElementById('careers')
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+    return () => clearInterval(typingInterval);
+  }, []);
 
   return (
-    <div className="hero">
+    <section className="hero">
       <div className="hero-bg" aria-hidden="true" />
-      
+
       <div className="hero-particles" aria-hidden="true">
         <div className="hero-particle"></div>
         <div className="hero-particle"></div>
@@ -55,45 +48,36 @@ function Hero() {
         </h1>
 
         <p className="hero-description">
-          Do not just choose a career — live through it. Explore skills, salary growth, 
-          daily routines, and interview prep for top tech careers.
+          Don't just guess your future career — simulate it today. Explore visual skill roadmaps,
+          salary progression, daily routines, and AI mentorship tailored for top tech careers.
         </p>
 
         <div className="hero-cta-group">
-          <button className="hero-cta-primary" onClick={scrollToCareers}>
-            Start Simulating ⚡
-          </button>
-          <button className="hero-cta-secondary" onClick={() => {
-            const el = document.getElementById('features')
-            if (el) el.scrollIntoView({ behavior: 'smooth' })
-          }}>
-            Learn More →
-          </button>
+          <Link to="/careers" className="hero-cta-primary" style={{ textDecoration: 'none' }}>
+            Explore Careers ⚡
+          </Link>
+          <Link to="/mentor" className="hero-cta-secondary" style={{ textDecoration: 'none' }}>
+            AI Career Mentor 🧠
+          </Link>
         </div>
 
         <div className="hero-stats">
           <div className="hero-stat">
-            <div className="hero-stat-value">
-              <AnimatedCounter target={6} duration={1500} suffix="+" />
-            </div>
+            <AnimatedCounter target={6} duration={1500} suffix="+" />
             <div className="hero-stat-label">Career Paths</div>
           </div>
           <div className="hero-stat">
-            <div className="hero-stat-value">
-              <AnimatedCounter target={50} duration={2000} suffix="+" />
-            </div>
+            <AnimatedCounter target={50} duration={2000} suffix="+" />
             <div className="hero-stat-label">Skills Mapped</div>
           </div>
           <div className="hero-stat">
-            <div className="hero-stat-value">
-              <AnimatedCounter target={100} duration={2000} suffix="%" />
-            </div>
+            <AnimatedCounter target={100} duration={2000} suffix="%" />
             <div className="hero-stat-label">Free & Visual</div>
           </div>
         </div>
       </div>
-    </div>
-  )
+    </section>
+  );
 }
 
-export default Hero
+export default Hero;

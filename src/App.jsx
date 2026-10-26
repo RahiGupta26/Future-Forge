@@ -1,135 +1,51 @@
-import { useState, useEffect } from 'react'
-import Navbar from './components/common/Navbar'
-import Hero from './components/landing/Hero'
-import Features from './components/landing/Features'
-import Testimonials from './components/landing/Testimonials'
-import CareerSelection from './components/careers/CareerSelection'
-import SimulatorDashboard from './components/simulator/SimulatorDashboard'
-import AIMentor from './components/mentor/AIMentor'
-import ResumeAnalyzer from './components/resume/ResumeAnalyzer'
-import Login from './components/auth/Login'
-import SignUp from './components/auth/SignUp'
-import Footer from './components/common/Footer'
-import { careerData } from './data/careerData'
-import './App.css'
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/common/Navbar';
+import Footer from './components/common/Footer';
+import ScrollToTop from './components/common/ScrollToTop';
+import ProtectedRoute from './components/common/ProtectedRoute';
+
+import HomePage from './pages/HomePage';
+import CareersPage from './pages/CareersPage';
+import SimulatorPage from './pages/SimulatorPage';
+import MentorPage from './pages/MentorPage';
+import ResumePage from './pages/ResumePage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+import NotFoundPage from './pages/NotFoundPage';
+
+import './styles/index.css';
+import './styles/common.css';
+import './App.css';
 
 function App() {
-  const [user, setUser] = useState(null)
-  const [authPage, setAuthPage] = useState('login')
-  const [selectedCareer, setSelectedCareer] = useState(null)
-  const [currentView, setCurrentView] = useState('home')
-
-  useEffect(() => {
-    const savedUser = localStorage.getItem('futureforge-user')
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser))
-      } catch {
-        localStorage.removeItem('futureforge-user')
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    if (selectedCareer) {
-      setCurrentView('simulator')
-      const el = document.getElementById('simulator')
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' })
-      }
-    }
-  }, [selectedCareer])
-
-  const handleLogin = (userData) => {
-    setUser(userData)
-    localStorage.setItem('futureforge-user', JSON.stringify(userData))
-  }
-
-  const handleSignUp = (userData) => {
-    setUser(userData)
-    localStorage.setItem('futureforge-user', JSON.stringify(userData))
-  }
-
-  const handleLogout = () => {
-    setUser(null)
-    setSelectedCareer(null)
-    setCurrentView('home')
-    localStorage.removeItem('futureforge-user')
-  }
-
-  const handleCareerSelect = (careerId) => {
-    const career = careerData.find(c => c.id === careerId)
-    setSelectedCareer(career)
-  }
-
-  const handleBackToHome = () => {
-    setSelectedCareer(null)
-    setCurrentView('home')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  if (!user) {
-    if (authPage === 'login') {
-      return (
-        <Login
-          onLogin={handleLogin}
-          onSwitchToSignUp={() => setAuthPage('signup')}
-        />
-      )
-    }
-    return (
-      <SignUp
-        onSignUp={handleSignUp}
-        onSwitchToLogin={() => setAuthPage('login')}
-      />
-    )
-  }
-
   return (
-    <div className="app">
-      <Navbar 
-        onNavigate={setCurrentView} 
-        onBackToHome={handleBackToHome}
-        showBack={selectedCareer !== null}
-        user={user}
-        onLogout={handleLogout}
-      />
-      
-      {!selectedCareer ? (
-        <main>
-          <section id="home">
-            <Hero />
-          </section>
-          <section id="features">
-            <Features />
-          </section>
-          <section id="careers">
-            <CareerSelection onSelect={handleCareerSelect} />
-          </section>
-          <section id="testimonials">
-            <Testimonials />
-          </section>
-          <section id="mentor">
-            <AIMentor career={null} />
-          </section>
-        </main>
-      ) : (
-        <main>
-          <section id="simulator">
-            <SimulatorDashboard career={selectedCareer} />
-          </section>
-          <section id="mentor">
-            <AIMentor career={selectedCareer} />
-          </section>
-          <section id="resume">
-            <ResumeAnalyzer career={selectedCareer} />
-          </section>
-        </main>
-      )}
-      
+    <div className="app-container">
+      <ScrollToTop />
+      <Navbar />
+
+      <main className="app-main-content">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/careers" element={<CareersPage />} />
+          <Route path="/careers/:careerId" element={<SimulatorPage />} />
+          <Route path="/mentor" element={<MentorPage />} />
+          <Route
+            path="/resume"
+            element={
+              <ProtectedRoute>
+                <ResumePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </main>
+
       <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

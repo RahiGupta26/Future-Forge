@@ -9,7 +9,6 @@ function LiveTechTrends({ career }) {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  // Map career to Dev.to tags
   const getTagForCareer = (id) => {
     switch (id) {
       case 'software-engineer':
@@ -31,22 +30,19 @@ function LiveTechTrends({ career }) {
 
   const currentTag = getTagForCareer(career?.id);
 
-  // Debounce implementation (Syllabus Lecture 67-72)
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchTerm);
-      setPage(1); // Reset to page 1 on new search
-    }, 400); // 400ms debounce
+      setPage(1);
+    }, 400);
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  // Consuming Dev.to REST API
   const fetchArticles = useCallback(async (pageNum, isLoadMore = false) => {
     setLoading(true);
     setError(null);
 
     try {
-      // Build API query URL
       let url = `https://dev.to/api/articles?tag=${currentTag}&page=${pageNum}&per_page=6`;
       const res = await fetch(url);
 
@@ -74,7 +70,6 @@ function LiveTechTrends({ career }) {
     }
   }, [currentTag]);
 
-  // Initial fetch on career or page change
   useEffect(() => {
     fetchArticles(1, false);
     setPage(1);
@@ -86,7 +81,6 @@ function LiveTechTrends({ career }) {
     fetchArticles(nextPage, true);
   };
 
-  // Filter client-side with debounced search
   const displayedArticles = articles.filter(a => {
     if (!debouncedSearch) return true;
     return (
@@ -97,7 +91,7 @@ function LiveTechTrends({ career }) {
 
   return (
     <div className="live-tech-trends" style={{ animation: 'fadeInUp 0.4s ease' }}>
-      {/* Header */}
+
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -125,7 +119,6 @@ function LiveTechTrends({ career }) {
           </p>
         </div>
 
-        {/* Debounced Search Input */}
         <div style={{ position: 'relative', minWidth: '240px' }}>
           <input
             type="text"
@@ -149,7 +142,6 @@ function LiveTechTrends({ career }) {
         </div>
       </div>
 
-      {/* Error & Retry State */}
       {error && (
         <div style={{
           padding: '24px',
@@ -178,7 +170,6 @@ function LiveTechTrends({ career }) {
         </div>
       )}
 
-      {/* Articles Grid */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
@@ -284,7 +275,6 @@ function LiveTechTrends({ career }) {
         </div>
       )}
 
-      {/* Pagination / Load More Button */}
       {!loading && hasMore && articles.length > 0 && (
         <div style={{ textAlign: 'center', marginTop: '36px' }}>
           <button

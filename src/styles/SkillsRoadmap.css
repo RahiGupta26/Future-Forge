@@ -1,58 +1,164 @@
 .skills-roadmap {
-    animation: fadeInUp 0.5s ease;
+  animation: fadeInUp 0.4s ease;
+}
+
+.skills-roadmap-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .skills-roadmap-title {
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 32px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px 0;
 }
 
-.skills-categories {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+.skills-title-icon {
+  font-size: 1.5rem;
 }
 
-.skills-category {
-    background: var(--bg-secondary);
-    border-radius: var(--radius-lg);
-    padding: 28px;
-    border: 1px solid var(--border-color);
+.skills-roadmap-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin: 0;
+  max-width: 650px;
+  line-height: 1.5;
+}
+
+.skills-total-badge {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+
+.skills-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.skills-category-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skills-category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.skills-category-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.skills-category-title-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.skills-category-icon {
+  font-size: 1.5rem;
+  background: var(--bg-tertiary);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .skills-category-title {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
 }
 
-.skills-category-badge {
-    padding: 2px 10px;
-    border-radius: var(--radius-full);
-    font-size: 0.7rem;
-    background: rgba(108, 99, 255, 0.1);
-    color: var(--accent-primary);
+.skills-category-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.35;
 }
 
-.skills-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+.skills-category-count {
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
 }
 
-@media (max-width: 768px) {
-    .skills-categories {
-        grid-template-columns: 1fr;
-    }
+/* Clean, Simple Skill Tag Pills */
+.skills-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.skill-pill:hover {
+  background: var(--bg-primary);
+  border-color: var(--pill-accent, var(--accent-primary));
+  transform: translateY(-1px);
+}
+
+.skill-pill-bullet {
+  color: var(--pill-accent, var(--accent-primary));
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.skill-pill-name {
+  white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+  .skills-categories-grid {
+    grid-template-columns: 1fr;
+  }
 }

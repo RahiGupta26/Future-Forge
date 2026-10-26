@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import ChatMessage from './ChatMessage.jsx';
 import '../../styles/AIMentor.css';
 
+// Read Gemini API Key safely from .env (keeps secrets safe from GitHub)
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${GEMINI_API_KEY}`;
 
@@ -108,7 +109,7 @@ function AIMentor({ career }) {
               borderRadius: '9999px',
               border: '1px solid rgba(255,255,255,0.2)'
             }}>
-              
+              🟢 Gemini Live
             </span>
           </div>
 

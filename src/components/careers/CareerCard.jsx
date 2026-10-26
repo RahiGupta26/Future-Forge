@@ -8,7 +8,7 @@ function CareerCard({ career }) {
 
   const handleBookmarkClick = (e) => {
     e.preventDefault();
-    e.stopPropagation(); // Prevent navigating when clicking heart icon
+    e.stopPropagation();
     dispatch(toggleBookmark(career));
   };
 
@@ -17,7 +17,7 @@ function CareerCard({ career }) {
       className="career-card"
       style={{ '--career-color': career.color, position: 'relative' }}
     >
-      {/* Redux Bookmark Toggle Button */}
+      
       <button
         type="button"
         onClick={handleBookmarkClick}
@@ -55,7 +55,7 @@ function CareerCard({ career }) {
       <h3 className="career-card-title">{career.title}</h3>
       <p className="career-card-tagline">{career.tagline}</p>
 
-      {/* Skills preview tags */}
+      
       {career.skills && (
         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '20px' }}>
           {career.skills.slice(0, 3).map((s, idx) => (
@@ -81,7 +81,7 @@ function CareerCard({ career }) {
         </div>
       )}
 
-      {/* Router Link to dedicated /careers/:id */}
+      
       <Link
         to={`/careers/${career.id}`}
         className="career-card-cta"

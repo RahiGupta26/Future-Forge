@@ -1,23 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useTheme } from '../../context/ThemeContext';
 
 function ThemeToggle() {
-  const [isDark, setIsDark] = useState(() => {
-    const saved = localStorage.getItem('futureforge-theme')
-    return saved === 'dark'
-  })
-
-  useEffect(() => {
-    if (isDark) {
-      document.body.classList.add('dark-theme')
-    } else {
-      document.body.classList.remove('dark-theme')
-    }
-    localStorage.setItem('futureforge-theme', isDark ? 'dark' : 'light')
-  }, [isDark])
-
-  const toggleTheme = () => {
-    setIsDark(prev => !prev)
-  }
+  const { isDark, toggleTheme } = useTheme();
 
   return (
     <button
@@ -28,7 +12,7 @@ function ThemeToggle() {
     >
       {isDark ? '☀️' : '🌙'}
     </button>
-  )
+  );
 }
 
-export default ThemeToggle
+export default ThemeToggle;
