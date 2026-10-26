@@ -1,81 +1,134 @@
-import { useState, useEffect, useRef } from 'react'
-import ChatMessage from './ChatMessage.jsx'
-import { careerData } from '../../data/careerData'
-import '../../styles/AIMentor.css'
+import { useState, useEffect, useRef } from 'react';
+import ChatMessage from './ChatMessage.jsx';
+import '../../styles/AIMentor.css';
+
+// Read Gemini API Key safely from .env (keeps secrets safe from GitHub)
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${GEMINI_API_KEY}`;
 
 function AIMentor({ career }) {
   const [messages, setMessages] = useState([
     {
       type: 'mentor',
       text: career
-        ? `Welcome! I am your AI Career Mentor for ${career.title}. Ask me anything about this career path!`
-        : 'Welcome to Future Forge! I am your AI Career Mentor. Select a career path above, or ask me a general question about tech careers!'
+        ? `Hello! I am your AI Career Mentor for ${career.title}. Ask me anything about skills, salary, or interviews!`
+        : 'Hello! I am your AI Career Mentor. Ask me any question about starting or growing your tech career!'
     }
-  ])
-  const [isTyping, setIsTyping] = useState(false)
-  const chatBodyRef = useRef(null)
+  ]);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const chatBodyRef = useRef(null);
 
-  const mentorAdvice = career
-    ? career.mentorAdvice
-    : [
-        { question: 'Which career should I choose?', answer: 'It depends on your interests! If you love building things, try Software Engineering. If you love data and patterns, try Data Science. If you are creative, UX Design might be perfect. Explore each path using our simulator to see what excites you most!' },
-        { question: 'How do I start in tech?', answer: 'Start with the basics: learn HTML, CSS, and JavaScript. Build small projects and share them on GitHub. Join tech communities, attend meetups, and never stop learning. Your first step matters more than your first choice!' },
-        { question: 'Is a CS degree necessary?', answer: 'Not anymore! Many successful tech professionals are self-taught or from bootcamps. What matters most is your skills, portfolio, and ability to solve problems. However, a degree can open doors at some large companies. Focus on learning and building.' }
-      ]
-
+  // Auto-scroll chat to bottom on new messages
   useEffect(() => {
     if (chatBodyRef.current) {
-      chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight
+      chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
-  }, [messages, isTyping])
+  }, [messages, loading]);
 
+  // Reset initial greeting when career changes
   useEffect(() => {
     setMessages([
       {
         type: 'mentor',
         text: career
-          ? `Welcome! I am your AI Career Mentor for ${career.title}. Ask me anything about this career path!`
-          : 'Welcome to Future Forge! I am your AI Career Mentor. Select a career path above, or ask me a general question about tech careers!'
+          ? `Hello! I am your AI Career Mentor for ${career.title}. What would you like to know?`
+          : 'Hello! I am your AI Career Mentor. Ask me any question about your tech career!'
       }
-    ])
-  }, [career])
+    ]);
+  }, [career]);
 
-  const handleQuestion = (qa) => {
-    setMessages(prev => [...prev, { type: 'user', text: qa.question }])
-    setIsTyping(true)
+  // Simple function to call Gemini API using fetch
+  const handleSendMessage = async (textToSend) => {
+    const query = (textToSend || input).trim();
+    if (!query || loading) return;
 
-    setTimeout(() => {
-      setIsTyping(false)
-      setMessages(prev => [...prev, { type: 'mentor', text: qa.answer }])
-    }, 1500)
-  }
+    // 1. Add user question to messages
+    setMessages((prev) => [...prev, { type: 'user', text: query }]);
+    setInput('');
+    setLoading(true);
+
+    try {
+      // 2. Prepare prompt context
+      const promptContext = career
+        ? `You are an AI career advisor for students interested in becoming a ${career.title}. Answer this question helpfully and concisely: ${query}`
+        : `You are an AI tech career advisor. Answer this student's question helpfully and concisely: ${query}`;
+
+      // 3. Fetch request to Gemini API
+      const response = await fetch(GEMINI_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: promptContext }]
+            }
+          ]
+        })
+      });
+
+      const data = await response.json();
+
+      // 4. Extract AI reply text
+      const replyText =
+        data.candidates?.[0]?.content?.parts?.[0]?.text ||
+        data.error?.message ||
+        'Sorry, I could not generate an answer right now. Please try asking again.';
+
+      // 5. Add AI response to chat
+      setMessages((prev) => [...prev, { type: 'mentor', text: replyText }]);
+    } catch (error) {
+      console.error('Gemini error:', error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          type: 'mentor',
+          text: `Error connecting to Gemini API: ${error.message}. Please check your connection.`
+        }
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const sampleQuestions = [
+    'How do I prepare for technical interviews?',
+    'What projects should I build to get hired?',
+    'What skills are most important for freshers?'
+  ];
 
   return (
     <div className="ai-mentor">
-      <div className="container">
-        <h2 className="section-title">
-          🤖 <span className="gradient-text">AI Career Mentor</span>
-        </h2>
-        <p className="section-subtitle">
-          Get personalized career advice from our AI mentor. Ask questions and get expert guidance.
-        </p>
-      </div>
-
       <div className="ai-mentor-container">
         <div className="mentor-chat">
+          {/* Header */}
           <div className="mentor-chat-header">
             <div className="mentor-avatar">🧠</div>
             <div className="mentor-info">
-              <h3>Career Mentor AI</h3>
-              <p>Always here to help</p>
+              <h3>{career ? `${career.title} AI Mentor` : 'Career Mentor AI'}</h3>
+              <p>Powered by Google Gemini 3.8 Flash API</p>
             </div>
+            <span style={{
+              marginLeft: 'auto',
+              background: 'rgba(16, 185, 129, 0.25)',
+              color: 'white',
+              fontSize: '0.75rem',
+              fontWeight: 600,
+              padding: '4px 10px',
+              borderRadius: '9999px',
+              border: '1px solid rgba(255,255,255,0.2)'
+            }}>
+              🟢 Gemini Live
+            </span>
           </div>
 
+          {/* Messages Body */}
           <div className="mentor-chat-body" ref={chatBodyRef}>
             {messages.map((msg, index) => (
               <ChatMessage key={index} message={msg} />
             ))}
-            {isTyping && (
+
+            {loading && (
               <div className="chat-message mentor">
                 <div className="chat-message-avatar">🧠</div>
                 <div className="chat-message-bubble">
@@ -89,22 +142,49 @@ function AIMentor({ career }) {
             )}
           </div>
 
+          {/* Suggested Quick Questions */}
           <div className="mentor-questions">
-            {mentorAdvice.map((qa, index) => (
+            {sampleQuestions.map((q, idx) => (
               <button
-                key={index}
+                key={idx}
+                type="button"
                 className="mentor-question-btn"
-                onClick={() => handleQuestion(qa)}
-                disabled={isTyping}
+                onClick={() => handleSendMessage(q)}
+                disabled={loading}
               >
-                {qa.question}
+                {q}
               </button>
             ))}
           </div>
+
+          {/* Input Form */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSendMessage();
+            }}
+            className="mentor-input-bar"
+          >
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask anything about your career..."
+              className="mentor-text-input"
+              disabled={loading}
+            />
+            <button
+              type="submit"
+              disabled={loading || !input.trim()}
+              className="mentor-send-btn"
+            >
+              {loading ? 'Thinking...' : 'Send ✈️'}
+            </button>
+          </form>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default AIMentor
+export default AIMentor;
