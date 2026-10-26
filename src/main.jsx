@@ -7,7 +7,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import App from './App.jsx';
 import './styles/index.css';
-
+// main
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>

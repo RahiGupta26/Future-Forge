@@ -6,16 +6,12 @@ import { Link } from 'react-router-dom';
 function HomePage() {
   return (
     <div className="home-page">
-      {/* 1. Hero Section */}
+    
       <Hero />
-
-      {/* 2. Why Future Forge? (Enhanced Features) */}
       <WhyFutureForge />
 
-      {/* 3. Testimonials Carousel */}
       <Testimonials />
 
-      {/* 4. Final CTA Banner */}
       <section style={{
         padding: '80px 24px',
         textAlign: 'center',

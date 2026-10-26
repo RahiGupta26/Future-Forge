@@ -1,3 +1,4 @@
+// chatmessage.jsx
 function ChatMessage({ message }) {
   return (
     <div className={`chat-message ${message.type}`}>

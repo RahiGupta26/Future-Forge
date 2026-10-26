@@ -22,7 +22,7 @@ function ResumePage() {
   return (
     <div className="resume-page" style={{ paddingTop: 'calc(var(--navbar-height) + 32px)', paddingBottom: '80px' }}>
       <div className="container">
-        {/* Header */}
+
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <span style={{
             fontSize: '0.85rem',
@@ -49,7 +49,6 @@ function ResumePage() {
             Benchmark your resume against required industry competencies, discover keyword gaps, and optimize your ATS score.
           </p>
 
-          {/* Target Role Selector */}
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -87,7 +86,6 @@ function ResumePage() {
           </div>
         </div>
 
-        {/* Resume Analyzer Component */}
         <ResumeAnalyzer career={selectedCareer} />
       </div>
     </div>

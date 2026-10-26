@@ -26,7 +26,7 @@ function MentorPage() {
   return (
     <div className="mentor-page" style={{ paddingTop: 'calc(var(--navbar-height) + 32px)', paddingBottom: '80px' }}>
       <div className="container">
-        {/* Header */}
+       
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <span style={{
             fontSize: '0.85rem',
@@ -53,7 +53,6 @@ function MentorPage() {
             Get instant answers to roadmap questions, interview hurdles, and daily work expectations.
           </p>
 
-          {/* Career Switcher Dropdown */}
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -92,7 +91,6 @@ function MentorPage() {
           </div>
         </div>
 
-        {/* AI Mentor Component */}
         <AIMentor career={currentCareer} />
       </div>
     </div>

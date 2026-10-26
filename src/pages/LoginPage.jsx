@@ -95,7 +95,6 @@ function LoginPage() {
           <p className="auth-subtitle">Sign in to resume your career simulation journey</p>
         </div>
 
-        {/* Demo Account Quick-Fill Box for Professor */}
         <div style={{
           background: 'var(--bg-tertiary)',
           border: '1px dashed var(--accent-primary)',
