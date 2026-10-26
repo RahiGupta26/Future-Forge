@@ -93,7 +93,6 @@ function AIMentor({ career }) {
       <div className="ai-mentor-container">
         <div className="mentor-chat">
           <div className="mentor-chat-header">
-            <div className="mentor-avatar">🧠</div>
             <div className="mentor-info">
               <h3>{career ? `${career.title} AI Mentor` : 'Career Mentor AI'}</h3>
               <p>Powered by Google Gemini 3.8 Flash API</p>
@@ -164,7 +163,7 @@ function AIMentor({ career }) {
               disabled={loading || !input.trim()}
               className="mentor-send-btn"
             >
-              {loading ? 'Thinking...' : 'Send ✈️'}
+              {loading ? 'Thinking...' : 'Send'}
             </button>
           </form>
         </div>
