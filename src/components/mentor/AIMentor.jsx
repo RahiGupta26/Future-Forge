@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import ChatMessage from './ChatMessage.jsx';
 import '../../styles/AIMentor.css';
 
-// Read Gemini API Key safely from .env (keeps secrets safe from GitHub)
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${GEMINI_API_KEY}`;
 
@@ -19,14 +18,12 @@ function AIMentor({ career }) {
   const [loading, setLoading] = useState(false);
   const chatBodyRef = useRef(null);
 
-  // Auto-scroll chat to bottom on new messages
   useEffect(() => {
     if (chatBodyRef.current) {
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
   }, [messages, loading]);
 
-  // Reset initial greeting when career changes
   useEffect(() => {
     setMessages([
       {
@@ -38,23 +35,19 @@ function AIMentor({ career }) {
     ]);
   }, [career]);
 
-  // Simple function to call Gemini API using fetch
   const handleSendMessage = async (textToSend) => {
     const query = (textToSend || input).trim();
     if (!query || loading) return;
 
-    // 1. Add user question to messages
     setMessages((prev) => [...prev, { type: 'user', text: query }]);
     setInput('');
     setLoading(true);
 
     try {
-      // 2. Prepare prompt context
       const promptContext = career
         ? `You are an AI career advisor for students interested in becoming a ${career.title}. Answer this question helpfully and concisely: ${query}`
         : `You are an AI tech career advisor. Answer this student's question helpfully and concisely: ${query}`;
 
-      // 3. Fetch request to Gemini API
       const response = await fetch(GEMINI_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -69,13 +62,11 @@ function AIMentor({ career }) {
 
       const data = await response.json();
 
-      // 4. Extract AI reply text
       const replyText =
         data.candidates?.[0]?.content?.parts?.[0]?.text ||
         data.error?.message ||
         'Sorry, I could not generate an answer right now. Please try asking again.';
 
-      // 5. Add AI response to chat
       setMessages((prev) => [...prev, { type: 'mentor', text: replyText }]);
     } catch (error) {
       console.error('Gemini error:', error);
@@ -101,7 +92,6 @@ function AIMentor({ career }) {
     <div className="ai-mentor">
       <div className="ai-mentor-container">
         <div className="mentor-chat">
-          {/* Header */}
           <div className="mentor-chat-header">
             <div className="mentor-avatar">🧠</div>
             <div className="mentor-info">
@@ -118,11 +108,10 @@ function AIMentor({ career }) {
               borderRadius: '9999px',
               border: '1px solid rgba(255,255,255,0.2)'
             }}>
-              🟢 Gemini Live
+              
             </span>
           </div>
 
-          {/* Messages Body */}
           <div className="mentor-chat-body" ref={chatBodyRef}>
             {messages.map((msg, index) => (
               <ChatMessage key={index} message={msg} />
@@ -142,7 +131,6 @@ function AIMentor({ career }) {
             )}
           </div>
 
-          {/* Suggested Quick Questions */}
           <div className="mentor-questions">
             {sampleQuestions.map((q, idx) => (
               <button
@@ -157,7 +145,6 @@ function AIMentor({ career }) {
             ))}
           </div>
 
-          {/* Input Form */}
           <form
             onSubmit={(e) => {
               e.preventDefault();
