@@ -43,6 +43,18 @@ function AIMentor({ career }) {
     setInput('');
     setLoading(true);
 
+    if (!GEMINI_API_KEY) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          type: 'mentor',
+          text: '⚠️ Gemini API key is missing. Please create a .env file with VITE_GEMINI_API_KEY=your_key in the project root and restart the server (npm run dev).'
+        }
+      ]);
+      setLoading(false);
+      return;
+    }
+
     try {
       const promptContext = career
         ? `You are an AI career advisor for students interested in becoming a ${career.title}. Answer this question helpfully and concisely: ${query}`
