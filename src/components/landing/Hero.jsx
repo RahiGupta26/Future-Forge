@@ -34,10 +34,7 @@ function Hero() {
       </div>
 
       <div className="hero-content">
-        <div className="hero-badge">
-          <span className="hero-badge-dot"></span>
-          Interactive Career Simulator
-        </div>
+        
 
         <h1 className="hero-title">
           <span className={`hero-title-highlight hero-typewriter${isTypingDone ? ' hero-typewriter-done' : ''}`}>
